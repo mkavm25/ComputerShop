@@ -1,0 +1,180 @@
+﻿<Window x:Class="ComputerShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComputerShop"
+        mc:Ignorable="d"
+        Title="Компьютерный магазин" Height="650" Width="1000"
+        WindowStartupLocation="CenterScreen" Background="#FF2E2E2E">
+    <Window.Resources>
+        <Style TargetType="DataGridCell">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Управление компьютерным магазином" 
+               FontSize="24" HorizontalAlignment="Center" Foreground="#FFE9CB80"/>
+
+        <TabControl Grid.Row="1" Margin="10" Background="#FF3E3E3E">
+            <TabItem Header="Товары" Foreground="Black">
+                <Grid>
+                    <DataGrid x:Name="ProductsGrid" Margin="5" AutoGenerateColumns="False" 
+                              IsReadOnly="True" Background="#FF6D60B0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding IDProduct}" Width="40"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="150"/>
+                            <DataGridTextColumn Header="Бренд" Binding="{Binding Brand}" Width="100"/>
+                            <DataGridTextColumn Header="Модель" Binding="{Binding Model}" Width="120"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="80"/>
+                            <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="60"/>
+                            <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="120"/>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Изменить" Tag="{Binding IDProduct}"
+                                                Click="EditProduct_Click" Style="{StaticResource {x:Type Button}}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Tag="{Binding IDProduct}"
+                                                Click="DeleteProduct_Click" Style="{StaticResource {x:Type Button}}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Категории" Foreground="Black">
+                <Grid>
+                    <DataGrid x:Name="CategoriesGrid" Margin="5" AutoGenerateColumns="False" 
+                              IsReadOnly="True" Background="#FF6D60B0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding IDCategory}" Width="40"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="200"/>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Изменить" Tag="{Binding IDCategory}"
+                                                Click="EditCategory_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Tag="{Binding IDCategory}"
+                                                Click="DeleteCategory_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Клиенты" Foreground="Black">
+                <Grid>
+                    <DataGrid x:Name="CustomersGrid" Margin="5" AutoGenerateColumns="False" 
+                              IsReadOnly="True" Background="#FF6D60B0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding IDCustomer}" Width="40"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="100"/>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="120"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="120"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Изменить" Tag="{Binding IDCustomer}"
+                                                Click="EditCustomer_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Tag="{Binding IDCustomer}"
+                                                Click="DeleteCustomer_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Заказы" Foreground="Black">
+                <Grid>
+                    <DataGrid x:Name="OrdersGrid" Margin="5" AutoGenerateColumns="False" 
+                              IsReadOnly="True" Background="#FF6D60B0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding IDOrder}" Width="40"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding OrderDate, StringFormat={}{0:dd.MM.yyyy}}" Width="100"/>
+                            <DataGridTextColumn Header="Клиент" Binding="{Binding CustomerID.LastName}" Width="120"/>
+                            <DataGridTextColumn Header="Сумма" Binding="{Binding TotalAmount}" Width="80"/>
+                            <DataGridTemplateColumn Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Детали заказа" Tag="{Binding IDOrder}"
+                                                Click="ShowOrderDetails_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Поставщики" Foreground="Black">
+                <Grid>
+                    <DataGrid x:Name="SuppliersGrid" Margin="5" AutoGenerateColumns="False" 
+                  IsReadOnly="True" Background="#FF6D60B0"
+                  RowBackground="#FFFFFF" 
+                        AlternatingRowBackground="#F0F0F0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding SupplierID}" Width="40"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding SupplierName}" Width="200"/>
+                            <DataGridTextColumn Header="Контактное лицо" Binding="{Binding ContactInfo}" Width="150"/>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Изменить" Tag="{Binding SupplierID}"
+                                    Click="EditSupplier_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" Tag="{Binding SupplierID}"
+                                    Click="DeleteSupplier_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="AddProductBtn" Content="Добавить товар" Width="150" Click="AddProduct_Click"/>
+            <Button x:Name="AddCategoryBtn" Content="Добавить категорию" Width="150" Click="AddCategory_Click"/>
+            <Button x:Name="AddCustomerBtn" Content="Добавить клиента" Width="150" Click="AddCustomer_Click"/>
+            <Button x:Name="CreateOrderBtn" Content="Создать заказ" Width="150" Click="CreateOrder_Click"/>
+            <Button x:Name="AddSupplierBtn" Content="Добавить поставщика" Width="150" Click="AddSupplier_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

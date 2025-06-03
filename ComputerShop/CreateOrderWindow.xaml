@@ -1,0 +1,87 @@
+﻿<Window x:Class="ComputerShop.CreateOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComputerShop"
+        mc:Ignorable="d"
+        Title="Создание заказа" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen" Background="#FF2E2E2E">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Создание нового заказа" FontSize="18" 
+               HorizontalAlignment="Center" Foreground="#FFE9CB80" Margin="0,0,0,20"/>
+
+        <Label Grid.Row="1" Content="Клиент:" Foreground="White"/>
+		<ComboBox Grid.Row="2"
+          ItemsSource="{Binding Customers}"
+          DisplayMemberPath="FullName"
+          SelectedValue="{Binding SelectedCustomerId}"
+          SelectedValuePath="IDCustomer"
+          Margin="0,0,0,20"
+          Foreground="Black"
+          Background="#FF2E2E2E">
+			<ComboBox.ItemContainerStyle>
+				<Style TargetType="ComboBoxItem">
+					<Setter Property="Foreground" Value="White"/>
+					<Setter Property="Background" Value="#FF2E2E2E"/>
+				</Style>
+			</ComboBox.ItemContainerStyle>
+		</ComboBox>
+
+		<DataGrid Grid.Row="3" x:Name="OrderItemsGrid" AutoGenerateColumns="False"
+          ItemsSource="{Binding OrderItems}" CanUserAddRows="True"
+          Background="#FF6D60B0" Margin="0,0,0,10">
+			<DataGrid.Columns>
+				<DataGridTemplateColumn Header="Товар" Width="*">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<ComboBox ItemsSource="{Binding DataContext.Products, RelativeSource={RelativeSource AncestorType=Window}}"
+									  DisplayMemberPath="Name"
+									  SelectedValuePath="IDProduct"
+									  SelectedValue="{Binding ProductID}"
+									  Foreground="Black"
+									  TextElement.Foreground="Black"
+									  BorderBrush="Transparent">
+								<ComboBox.ItemContainerStyle>
+									<Style TargetType="ComboBoxItem">
+										<Setter Property="Foreground" Value="White"/>
+										<Setter Property="Background" Value="Black"/>
+									</Style>
+								</ComboBox.ItemContainerStyle>
+							</ComboBox>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="Цена" Binding="{Binding UnitPrice}" IsReadOnly="True" Width="80"/>
+				<DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="100"/>
+				<DataGridTextColumn Header="Сумма" Binding="{Binding TotalPrice}" IsReadOnly="True" Width="100"/>
+				<DataGridTemplateColumn Width="100">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button Content="Удалить" Background="#FFE9CB80" Click="RemoveItem_Click"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Label Content="Общая сумма:" Foreground="White"/>
+            <Label Content="{Binding TotalAmount}" Foreground="#FFE9CB80" FontWeight="Bold" Width="100"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Сохранить заказ" Width="150" Background="#FFE9CB80" IsDefault="True" Click="SaveOrder_Click"/>
+            <Button Content="Отмена" Width="100" Background="#FFE9CB80" Margin="10,0,0,0" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

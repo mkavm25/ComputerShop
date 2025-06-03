@@ -1,0 +1,72 @@
+﻿<Window x:Class="ComputerShop.AddEditSupplierWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Title}" Height="350" Width="450"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF2E2E2E">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="{Binding Title}"
+                   FontSize="18"
+                   HorizontalAlignment="Center"
+                   Foreground="#FFE9CB80"
+                   Margin="0,0,0,15"/>
+        <Label Grid.Row="1"
+               Content="Название поставщика:"
+               Foreground="White"
+               Margin="0,5"/>
+        <TextBox Grid.Row="2"
+                 Text="{Binding CurrentSupplier.SupplierName}"
+                 Height="25"
+                 Margin="0,0,0,10"
+                 Background="#FF3E3E3E"
+                 Foreground="White"/>
+        <Label Grid.Row="3"
+               Content="Контактная информация:"
+               Foreground="White"
+               Margin="0,5"/>
+        <TextBox Grid.Row="4"
+                 Text="{Binding CurrentSupplier.ContactInfo}"
+                 Height="25"
+                 Margin="0,0,0,10"
+                 Background="#FF3E3E3E"
+                 Foreground="White"/>
+        <Label Grid.Row="5"
+               Content="Телефон:"
+               Foreground="White"
+               Margin="0,5"/>
+        <TextBox Grid.Row="6"
+                 Text="{Binding CurrentSupplier.Phone}"
+                 Height="25"
+                 Margin="0,0,0,15"
+                 Background="#FF3E3E3E"
+                 Foreground="White"/>
+        <StackPanel Grid.Row="7"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10">
+            <Button Content="Сохранить"
+                    Width="120"
+                    Height="35"
+                    Background="#FFE9CB80"
+                    Click="SaveButton_Click"
+                    IsDefault="True"/>
+            <Button Content="Отмена"
+                    Width="120"
+                    Height="35"
+                    Background="#FFE9CB80"
+                    Margin="15,0,0,0"
+                    IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
